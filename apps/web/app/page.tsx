@@ -33,13 +33,13 @@ export default function LandingPage() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Link
+            <a
               href="/api/auth/ml/login"
               className="group relative flex h-9 items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-black transition-all hover:scale-105 hover:bg-white/90 shadow-[0_0_15px_rgba(255,255,255,0.15)]"
             >
               <span>Conectar Conta</span>
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            </a>
           </div>
         </div>
       </nav>
@@ -63,13 +63,13 @@ export default function LandingPage() {
           </p>
 
           <div className="animate-fade-in-up animation-delay-300 flex flex-col items-center justify-center gap-4">
-            <Link
+            <a
               href="/api/auth/ml/login"
               className="group relative flex h-14 w-full sm:w-[320px] items-center justify-center gap-3 rounded-full bg-accent px-8 text-base font-bold text-white transition-all hover:bg-accent-hover hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(79,70,229,0.4)] overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
               Entrar com Mercado Livre
-            </Link>
+            </a>
             <div className="flex items-center gap-2 mt-4 opacity-60">
               <ShieldCheck className="w-4 h-4 text-success" />
               <p className="text-xs font-medium text-white/80"> Autenticação 100% segura via OAuth 2.0</p>
@@ -233,9 +233,9 @@ export default function LandingPage() {
                 <div className="flex items-center gap-3"><CheckCircle2 className="w-5 h-5 text-success" /><span className="text-white/80 text-sm">Central de Pedidos e Mensagens</span></div>
                 <div className="flex items-center gap-3"><CheckCircle2 className="w-5 h-5 text-success" /><span className="text-white/80 text-sm">Publicação Ilimitada Manual</span></div>
               </div>
-              <Link href="/api/auth/ml/login" className="flex h-12 items-center justify-center rounded-xl bg-white/10 text-sm font-bold text-white transition-colors hover:bg-white/20">
+              <a href="/api/auth/ml/login" className="flex h-12 items-center justify-center rounded-xl bg-white/10 text-sm font-bold text-white transition-colors hover:bg-white/20">
                 Começar Grátis
-              </Link>
+              </a>
             </div>
 
             {/* PRO Plan */}
@@ -277,13 +277,13 @@ export default function LandingPage() {
           </h2>
 
           <div className="pt-8">
-            <Link
+            <a
               href="/api/auth/ml/login"
               className="group relative inline-flex h-14 items-center justify-center gap-3 rounded-full bg-white text-base font-bold text-black px-10 transition-all hover:scale-105 hover:bg-white/90 shadow-[0_0_40px_rgba(255,255,255,0.2)] overflow-hidden"
             >
               Comece gratuitamente via Mercado Livre
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            </a>
           </div>
 
           <div className="mt-20 text-xs font-medium text-white/30 flex flex-col md:flex-row items-center justify-center gap-4 pt-10 border-t border-white/5">
