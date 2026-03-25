@@ -1,22 +1,19 @@
 import { z } from "zod";
-import { router, publicProcedure } from "../trpc";
+import { router, protectedProcedure } from "../trpc";
 import { orders, mlListings, questions } from "@sellio/db/schema";
 import { sql, eq, desc } from "drizzle-orm";
 
 export const dashboardRouter = router({
-    getOverview: publicProcedure
+    getOverview: protectedProcedure
         .input(z.object({
             timeRange: z.enum(['7d', '30d', '90d']).default('30d')
         }))
         .query(async ({ ctx, input }) => {
-            // Hardcoding sellerId for now to match our dev dummy seed
-            const devSellerId = "00000000-0000-0000-0000-000000000001";
-
             // Count active products
             const productsRes = await ctx.db
                 .select({ count: sql<number>`count(*)` })
                 .from(mlListings)
-                .where(eq(mlListings.sellerId, devSellerId));
+                .where(eq(mlListings.sellerId, ctx.sellerId));
 
             const activeProducts = Number(productsRes[0]?.count || 0);
 
@@ -27,7 +24,7 @@ export const dashboardRouter = router({
                     count: sql<number>`count(*)`
                 })
                 .from(orders)
-                .where(eq(orders.sellerId, devSellerId));
+                .where(eq(orders.sellerId, ctx.sellerId));
 
             const totalRevenue = Number(ordersRes[0]?.totalRevenue || 0);
             const salesCount = Number(ordersRes[0]?.count || 0);
@@ -37,7 +34,7 @@ export const dashboardRouter = router({
             const latestOrders = await ctx.db
                 .select()
                 .from(orders)
-                .where(eq(orders.sellerId, devSellerId))
+                .where(eq(orders.sellerId, ctx.sellerId))
                 .orderBy(desc(orders.createdAt))
                 .limit(5);
 
