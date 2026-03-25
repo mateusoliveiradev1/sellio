@@ -118,7 +118,7 @@ export const productRouter = router({
                     {
                         sellerId: ctx.sellerId,
                         accessToken: token.accessToken,
-                        refreshToken: token.refreshToken,
+                        refreshToken: token.refreshToken ?? '',
                         onTokenRefreshed: async (newTokens) => {
                             await ctx.db
                                 .update(mlTokens)
