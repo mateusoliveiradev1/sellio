@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { exchangeCodeForTokens } from '@sellio/ml-sdk'
-import { createDb, eq } from '@sellio/db'
+import { createDb } from '@sellio/db'
+import { eq } from 'drizzle-orm'
 import { sellers } from '@sellio/db/schema'
 
 export async function GET(request: Request) {
