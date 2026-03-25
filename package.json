@@ -1,12 +1,20 @@
 {
-  "name": "my-turborepo",
+  "name": "sellio",
   "private": true,
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:unit": "turbo run test:unit",
+    "test:integration": "turbo run test:integration",
+    "test:e2e": "turbo run test:e2e",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json,css}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,md,json,css}\"",
+    "db:push": "pnpm --filter @sellio/db push",
+    "db:studio": "pnpm --filter @sellio/db studio",
+    "db:generate": "pnpm --filter @sellio/db generate"
   },
   "devDependencies": {
     "prettier": "^3.7.4",
@@ -15,6 +23,6 @@
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   }
 }

@@ -1,0 +1,31 @@
+{
+    "name": "@sellio/db",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "main": "./src/index.ts",
+    "types": "./src/index.ts",
+    "exports": {
+        ".": "./src/index.ts",
+        "./schema": "./src/schema/index.ts",
+        "./client": "./src/client.ts"
+    },
+    "scripts": {
+        "typecheck": "tsc --noEmit",
+        "push": "drizzle-kit push",
+        "generate": "drizzle-kit generate",
+        "studio": "drizzle-kit studio",
+        "test": "vitest run",
+        "test:unit": "vitest run"
+    },
+    "dependencies": {
+        "@neondatabase/serverless": "^0.10.0",
+        "drizzle-orm": "^0.38.0",
+        "@sellio/schemas": "workspace:*"
+    },
+    "devDependencies": {
+        "drizzle-kit": "^0.30.0",
+        "typescript": "5.9.2",
+        "vitest": "^3.0.0"
+    }
+}
