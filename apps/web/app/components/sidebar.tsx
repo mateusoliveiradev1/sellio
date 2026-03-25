@@ -1,6 +1,6 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import {
     LayoutDashboard,
@@ -35,7 +35,18 @@ interface SidebarProps {
 
 export function Sidebar({ mobileOpen = false, setMobileOpen }: SidebarProps) {
     const pathname = usePathname()
+    const router = useRouter()
     const { data: authData } = trpc.auth.getConnection.useQuery()
+
+    const handleLogout = async () => {
+        try {
+            await fetch('/api/auth/logout', { method: 'POST' })
+            router.push('/')
+            router.refresh()
+        } catch (error) {
+            console.error('Logout failed', error)
+        }
+    }
 
     return (
         <>
@@ -145,7 +156,11 @@ export function Sidebar({ mobileOpen = false, setMobileOpen }: SidebarProps) {
                                 </div>
                             </div>
 
-                            <button className="group relative mt-2 flex w-full items-center gap-3.5 rounded-2xl px-4 py-3 text-sm font-medium text-danger/80 transition-colors duration-300 hover:bg-danger/10 hover:text-danger">
+
+                            <button
+                                onClick={handleLogout}
+                                className="group relative mt-2 flex w-full items-center gap-3.5 rounded-2xl px-4 py-3 text-sm font-medium text-danger/80 transition-colors duration-300 hover:bg-danger/10 hover:text-danger"
+                            >
                                 <LogOut className="h-4.5 w-4.5" strokeWidth={2} />
                                 Sair da conta
                             </button>
