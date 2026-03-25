@@ -11,8 +11,10 @@ import {
     LogOut,
     Wallet,
     Sparkles,
-    X
+    X,
+    User
 } from 'lucide-react'
+import { trpc } from '../../trpc/client'
 
 const PRIMARY_NAV = [
     { href: '/dashboard', label: 'Panorama', icon: LayoutDashboard },
@@ -33,6 +35,7 @@ interface SidebarProps {
 
 export function Sidebar({ mobileOpen = false, setMobileOpen }: SidebarProps) {
     const pathname = usePathname()
+    const { data: authData } = trpc.auth.getConnection.useQuery()
 
     return (
         <>
@@ -127,7 +130,22 @@ export function Sidebar({ mobileOpen = false, setMobileOpen }: SidebarProps) {
                                     </Link>
                                 )
                             })}
-                            <button className="group relative flex w-full items-center gap-3.5 rounded-2xl px-4 py-3 text-sm font-medium text-danger/80 transition-colors duration-300 hover:bg-danger/10 hover:text-danger">
+
+                            <div className="group relative flex w-full flex-col gap-1 rounded-2xl px-4 py-3 bg-white/[0.02] border border-white/[0.05]">
+                                <div className="flex items-center gap-3">
+                                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent/20">
+                                        <User className="h-4 w-4 text-accent" />
+                                    </div>
+                                    <div className="flex flex-col overflow-hidden">
+                                        <span className="text-xs text-text-muted">Conectado como</span>
+                                        <span className="text-sm font-bold text-white truncate max-w-[150px]">
+                                            {authData?.mlNickname || 'Carregando...'}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button className="group relative mt-2 flex w-full items-center gap-3.5 rounded-2xl px-4 py-3 text-sm font-medium text-danger/80 transition-colors duration-300 hover:bg-danger/10 hover:text-danger">
                                 <LogOut className="h-4.5 w-4.5" strokeWidth={2} />
                                 Sair da conta
                             </button>

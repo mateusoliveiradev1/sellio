@@ -3,6 +3,8 @@ import { exchangeCodeForTokens } from '@sellio/ml-sdk'
 import { createDb, eq } from '@sellio/db'
 import { mlTokens, sellers } from '@sellio/db/schema'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
     const code = searchParams.get('code')
