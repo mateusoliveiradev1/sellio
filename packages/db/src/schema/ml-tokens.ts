@@ -11,7 +11,7 @@ export const mlTokens = pgTable('ml_tokens', {
         .notNull(),
     mlUserId: bigint('ml_user_id', { mode: 'number' }).notNull(),
     accessToken: text('access_token').notNull(),
-    refreshToken: text('refresh_token').notNull(),
+    refreshToken: text('refresh_token'),
     expiresAt: timestamp('expires_at').notNull(),
     mlNickname: text('ml_nickname'),
     createdAt: timestamp('created_at').defaultNow().notNull(),

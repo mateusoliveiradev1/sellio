@@ -57,7 +57,7 @@ export async function GET(request: Request) {
             await db.update(mlTokens)
                 .set({
                     accessToken: tokens.access_token,
-                    refreshToken: tokens.refresh_token,
+                    refreshToken: tokens.refresh_token ?? null,
                     mlUserId: tokens.user_id,
                     expiresAt: new Date(Date.now() + tokens.expires_in * 1000),
                     updatedAt: new Date()
@@ -67,7 +67,7 @@ export async function GET(request: Request) {
             await db.insert(mlTokens).values({
                 sellerId: devSellerId,
                 accessToken: tokens.access_token,
-                refreshToken: tokens.refresh_token,
+                refreshToken: tokens.refresh_token ?? null,
                 mlUserId: tokens.user_id,
                 expiresAt: new Date(Date.now() + tokens.expires_in * 1000)
             })
