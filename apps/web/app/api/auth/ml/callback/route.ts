@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server'
 import { exchangeCodeForTokens } from '@sellio/ml-sdk'
-import { createDb } from '@sellio/db'
-import { eq } from 'drizzle-orm'
-import { sellers } from '@sellio/db/schema'
+import { createDb, eq } from '@sellio/db'
+import { mlTokens } from '@sellio/db/schema'
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
@@ -36,15 +35,28 @@ export async function GET(request: Request) {
         // No MVP, amarramos esse login ao nosso usuário de testes (Dev Seller)
         const devSellerId = '11111111-1111-1111-1111-111111111111'
 
-        // 3. Salva o Token de forma segura na tabela do Seller
-        await db.update(sellers)
-            .set({
-                mlAccessToken: tokens.access_token,
-                mlRefreshToken: tokens.refresh_token,
-                mlUserId: tokens.user_id.toString(),
-                mlTokenExpiresAt: new Date(Date.now() + tokens.expires_in * 1000)
+        // 3. Salva o Token de forma segura na tabela mlTokens
+        const existingTokens = await db.select().from(mlTokens).where(eq(mlTokens.sellerId, devSellerId));
+
+        if (existingTokens.length > 0) {
+            await db.update(mlTokens)
+                .set({
+                    accessToken: tokens.access_token,
+                    refreshToken: tokens.refresh_token,
+                    mlUserId: tokens.user_id,
+                    expiresAt: new Date(Date.now() + tokens.expires_in * 1000),
+                    updatedAt: new Date()
+                })
+                .where(eq(mlTokens.sellerId, devSellerId))
+        } else {
+            await db.insert(mlTokens).values({
+                sellerId: devSellerId,
+                accessToken: tokens.access_token,
+                refreshToken: tokens.refresh_token,
+                mlUserId: tokens.user_id,
+                expiresAt: new Date(Date.now() + tokens.expires_in * 1000)
             })
-            .where(eq(sellers.id, devSellerId))
+        }
 
         // 4. Redirecionamento mágico e criação de sessão simulada (Cookie)
         const response = NextResponse.redirect(new URL('/dashboard', request.url))
